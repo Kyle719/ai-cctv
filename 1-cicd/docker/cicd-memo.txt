@@ -1,0 +1,37 @@
+https://docs.docker.com/compose/gettingstarted/
+
+호스트
+유저, 그룹 생성 및 uid, gid 지정
+sudo addgroup --gid 600 mw
+sudo adduser --ingroup mw --uid 601 wasadmin
+
+adduser, useradd 두가지 차이가 있음.
+
+docker 명령어 안먹힐때
+sudo groupadd docker
+sudo usermod -aG docker $USER
+newgrp docker
+
+
+호스트 유저 매핑?
+볼륨 마운트 permission 문제?
+/mw:/mw 볼륨 마운트하고 유저 권한 동일하게 되려면
+도커파일에서 RUN useradd 할때 호스트 유저와 동일하게 설정하면 됨.
+
+
+ll 명령어가 동작하지 않을 때
+alias ll='ls --color=auto -alF'
+또는
+echo "alias ll='ls --color=auto -alF'" >> ~/.bashrc
+source ~/.bashrc
+
+
+플라스크 페이지 드가서 request 날려보기
+request 받아서 log 파일 써지는지 보기
+-> flask 필요한가 생각해보기
+
+
+
+
+
+

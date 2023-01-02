@@ -1,0 +1,17 @@
+services:   # 두가지 application web, redis
+  redis:
+    image: "redis:alpine" # 얘는 이미지 바로 가져다 씀. 빌드 안함.
+    ports:
+      - '6379:6379'
+
+  web:
+    build:  # 얘는 컨테이너를 빌드함. 도커파일이 있는데 그거 보고 빌드함.
+      context: .
+    ports:
+      - '5000:5000'
+    volumes:
+      - .:/code
+    environment:
+      - FLASK_ENV: development
+    # /code 디렉토리 안에 app.py 있는데 이걸 볼륨 마운트하고 env 설정 이렇게 하면 호스트에서 app.py 수정해도 웹페이지에 실시간으로 반영됨
+    

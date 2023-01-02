@@ -1,0 +1,404 @@
+Shell 프로그래밍
+
+1강 Linux shell 이란
+2강 Bash shell 과 변수
+3강 Bash shell 과 rules
+4강 Bash shell 과 rules 2
+5강 Bash shell script 란
+6강 Positional Parameters
+7강 Input & Output
+8강 Branching
+9강 looping
+
+
+
+■■■ 1강 Linux shell 이란
+
+1. shell 역할
+사용자 명령어 해석기
+사용자가 프롬프트에 입력한 명령어를 해석해서 운영체제에게 전달
+
+2. shell 종류
+- Bourn shell
+- C shell
+- Korn shell
+- Bourne-again shell (Bash)
+/bin/bash 디렉토리에 application 으로 동작함.
+
+3. 기본 shell 구성하기
+cat /etc/shells : 전체 사용가능한 shell 확인
+echo $SHELL : 현재 사용중인 shell 확인
+chsh : 기본 shell 변경
+sudo chsh [username] : 사용자의 기본 shell 을 바꿀래
+sudo grep ubuntu /etc/passwd : 사용중인 shell 확인 가능함
+
+
+
+■■■ 2강 Bash shell 과 변수
+
+1. Shell 의 변수
+(1) shell 의 변수란
+데이터를 넣는 그릇
+선언할 필요없이 사용가능
+변수명:문자,숫자,_언더바로 구성가능. 숫자는 변수 시작에 넣으면 안됨
+(2) 변수선언
+ex) fname=hs
+lame=jeong
+score=90
+변수이름=값
+여러가지 type 가능함
+= 앞뒤로 띄우면 안됨. 명령어로 인식함.
+(3) 변수확인
+echo $fname
+echo $lname
+set : 현재 모든 변수명 표시
+set | grep name : 현재 모든 변수 중에 name 이 변수명에 포함된 변수들 모두 확인
+(4) 변수제거
+unset fname
+
+2. Shell 의 환경변수
+정의 : 동작되는 프로그램에게 영향을 주는 변수
+선언 :
+export varName=value
+export NAME=value
+변수선언 앞에 export 를 붙여준다.
+보통 환경변수는 대문자로 변수선언한다.
+시스템에 적용된 환경변수 확인 :
+env 입력하면 나옴. 환경변수만 나옴
+set 은 환경변수, 일반변수,.. 죄다 나옴
+
+환경변수 중에 PATH 라는 변수는 중요함.
+wasadmin@87c89edfd33a:/$ echo $PATH
+/opt/conda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+아래처럼 date 라고 명령어를 실행하면, shell 이 먼저 date 가 어디있는지 찾아야함.
+그때 이 PATH 환경변수를 보고 경로들을 돌면서
+date 프로그램을 찾아다니다 찾으면 실행시킴.
+wasadmin@87c89edfd33a:/$ date
+Fri Dec  9 01:26:19 UTC 2022
+
+환경변수 HOME 이 /home/wasad/min 이면 그냥 cd 치면 여기로감
+HOME=/tmp 로 바꾸면 cd 하면 /tmp 로 감
+
+환경변수 USER 는 로그인 사용자 이름
+echo $USER
+wasadmin@prezzie77-15U530-GT50K:~/workspace$ echo $USER
+wasadmin
+
+환경변수 SHELL 은 로그인 shell의 이름
+echo $SHELL
+wasadmin@prezzie77-15U530-GT50K:~/workspace$ echo $SHELL
+/bin/bash
+
+
+
+■■■ 3강 Bash shell 과 rules 기능
+
+1. Quoting Rule
+- Meta character
+shell 에서 특별히 의미를 정해 놓은 문자들
+\ ? () $ ... * % {} []
+echo * : 하면 현재 경로에 파일들 전부 보여줘
+echo a* : a 로 시작하는거 전부 보여줘
+echo ???? : 4글자 인거 전부 보여줘
+touch myfile{1..3} : myfile1, myfile2, myfile3 파일을 만듦
+- Quoting Rule : 메타문자의 의미를 제거하고 단순문자로 변경
+\ : \바로 뒤의 메타문자는 의미를 제거
+"" 또는 '' : "" 또는 '' 안에 있는 모든 메타문자는 의미를 제거
+단 "" 경우, $ 랑 ` 는 의미 제거 못함
+touch \*\*\* 하면 *** 이름의 파일을 만들수있음
+touch my\*name 하면 my*name 이름의 파일을 만들수있음
+touch "**" 하면 ** 이름의 파일을 만들수있음
+touch "This is a file" 하면 This is a file 이름의 파일을 만들수있음
+원래 blank 는 메타케릭터임
+
+2. Nesting commands
+Command 치환
+$(Command) 또는 `Command`
+date 명령어를 echo "" 안에다가 넣고싶으면?
+echo "Today is $(date)"
+echo "Today is `date`"
+wasadmin@prezzie77-15U530-GT50K:~/workspace$ echo "Today is $(date)"
+Today is 2022. 12. 09. (금) 11:15:15 KST
+아래처럼 활용 가능함
+wasadmin@prezzie77-15U530-GT50K:~/workspace$ date +%Y%m%d
+wasadmin@prezzie77-15U530-GT50K:~/workspace$ touch myfile-$(date +%Y%m%d)
+wasadmin@prezzie77-15U530-GT50K:~/workspace$ ls | grep my
+myfile-20221209
+
+'' 랑 "" 차이
+wasadmin@prezzie77-15U530-GT50K:~/workspace$ echo 'Today is $(date +%Y%m%d)'
+Today is $(date +%Y%m%d)
+wasadmin@prezzie77-15U530-GT50K:~/workspace$ echo "Today is $(date +%Y%m%d)"
+Today is 20221209
+
+3. Alias
+Shell 명령에 새로운 이름을 부여
+alias 등록 : alias name='command'
+alias 확인 : alias or alias name
+alias 삭제 : unalias name
+alias ll='ls -alF'
+alias rm='rm -i'
+-> 이렇게 해두면 rm file 했을때 진짜 지울래? 하고 확인할수 있음
+alias c=clear
+alias h=history
+-> 자주 쓰는거는 이렇게 짧게
+
+4. Prompt
+아래처럼 터미널에서 보여지는 형식.
+wasadmin@prezzie77-15U530-GT50K:~/workspace$ whoami
+wasadmin
+로그인한유저@호스트:현재dir
+이거 형식도 바꿀수 있다.
+echo $PS1 으로 현재 형식 확인.
+PS1='AWS-ubuntu20.04 \n \$ '
+이런식으로 바꿀수 있음.
+
+-> Alias, Prompt 는 로그인한 세션 현재 셸이 종료되면 사라짐
+.bashrc 파일에다가 등록해두면 안사라짐.
+vi 로 열어서 추가하고 :wq 하고 다시 로그인하면됨.
+
+도커 컨테이너는 보니까 호스트랑 독립적임.
+호스트에다가 bashrc 수정해도 컨테이너에는 적용 안됨.
+
+
+
+■■■ 4강 Bash shell 과 rules 2
+
+1. Redirection
+Communication Channels
+이미지01
+내가 프로그램과 communication 을 할건데
+키보드라는 1. 표준입력 stdin
+프로그램이 작업한 결과를 보여줄때 터미널을 통해 보여줄건데
+프로그램의 2. 표준출력 stdout
+프로그램의 3. 표준에러출력 stderr
+출력을 터미널로, 모니터로 보이게 됨.
+bash shell 은 STDIN은 0번/ STDOUT은 1번/ STDERR은 2번 로 연결되어있는데
+이것을 바꿀수 있는게 redirection 임.
+0, 1 숫자는 생략 가능함
+아래처럼 mail 보낼때 원래는 stdin 이 키보드가 표준 입력인데 
+root@87c89edfd33a:/workspace# mail -s "SAMPLE MAIL TEST" prezzie77@gmail.com
+Cc:
+asdfasdf
+mail -s "SAMPLE MAIL TEST" prezzie77@gmail.com 0< myFile.txt
+이렇게 입력장치를 file 로 바꿀수 있음 : file redirection
+출력을 바꾸고 싶다면 stdout, stderr
+wasadmin@87c89edfd33a:/workspace$ date
+Tue Dec 13 02:02:01 UTC 2022
+wasadmin@87c89edfd33a:/workspace$ date abcd
+date: invalid date 'abcd'
+wasadmin@87c89edfd33a:~/workspace$ data 1> date.out
+wasadmin@87c89edfd33a:~/workspace$ ll | grep date.out
+-rw-r--r-- 1 wasadmin mw   29 Dec 13 02:04 date.out
+파일에 내용을 appen  하고 싶으면 >> 두개하면됨
+wasadmin@87c89edfd33a:~/workspace$ date abcd 2> err.out
+wasadmin@87c89edfd33a:~/workspace$ ll | grep err
+-rw-r--r-- 1 wasadmin mw   26 Dec 13 02:05 err.out
+stdin, stderr 둘다 동시에도 나옴
+wasadmin@87c89edfd33a:~/workspace$ ls
+ai-cctv  file1.txt
+wasadmin@87c89edfd33a:~/workspace$ ls file1.txt file100.txt
+ls: cannot access 'file100.txt': No such file or directory
+file1.txt
+에러메시지는 안나오게 하려면
+wasadmin@87c89edfd33a:~/workspace$ ls file1.txt file100.txt 2> /dev/null
+file1.txt
+
+2. Pipeline
+명령의 실행결과를 다음 명령의 입력으로 전달
+command1 | command2 | command3
+| 파이프라인 기호로 이어서 작성.
+ls -l 했을때 파일 목록 쭉나오는데 몇개 파일이 있는지 알고 싶다.
+wc -l 은 line 수를 알려줌.
+ls -l | wc -l 하면 파일 목록의 라인 수를 알 수있음.(=파일 수)
+ls -l | more 하면 엔터치면서 한페이지씩 보여줌
+cat passwd | cut -d: -f 1 | sort | wc -l 하면 user 이름만 나오고 sort 하고 개수 새림
+passwd 파일 내용을 보면 username:...:...:... 이렇게 작성되어있는데
+파일을 열고 : 를 구분자로 잘라서 첫번째 field 값을 가져온것임.
+많이쓰는것들을 alias로 만들어두고 쓸수있음
+alias usercount='cat passwd | cut -d: -f 1 | sort | wc -l'
+
+
+
+■■■ 5강 Bash shell script 란
+script vs program
+하나의 파일에 기존에 존재하는 명령어들을 집어넣어서
+script 는 순서대로 interpret 해석해서 실행. ex) shell script
+프로그램은 소스코드를 컴파일러가 컴파일해서 binary 프로그램을 만들어서 동작시키는것. ex) c, c++, java
+shell script : shell 명령어들을 모아놓고 순차적으로 실행시키는것
+shell program : for, if, while 등 프로그램 문법을 집어넣어서 해놓은것
+
+1. Shell script 란?
+리눅스 커맨드들을 모아놓은 ASCII Text 파일
+sh 파일에 첫줄에 아래 내용이 있으면
+#!/bin/bash
+셔뱅,해시뱅 라인이라고 부름.
+스크립트를 실행할 sub shell 을 만들어서 실행시켜줘 라는 의미임.
+sub shell? 로그인하면 shell 이 실행되면서 터미널 화면이 보임.
+거기서 또 /bin/bash 바이너리를 실행시킬 수 있음. 이게 sub shell.
+
+
+
+■■■ 6강 Positional Parameters
+위치매개변수
+cp /etc/passwd ./pass 라면 
+cp 는 binary 파일이고 cp($0)의 첫번째($1), 두번째($2) argument 가 있음.
+위치에 맞춰서 변수를 cp 바이너리 프로그램에 전달함.
+tesh.sh file1 file2
+$0      $1    $2
+실행스크립트에 위치 매개변수를 전달함.
+이때 $# 아큐먼트에는 아규먼트의 총개수
+$@, $* 에는 모든 파라미터의 리스트 정보가 담김
+Special shell variables
+로그인 shell 의 PID : $$
+현재작업디렉토리 : $PWD
+부모프로세스ID : $PPID
+wasadmin@87c89edfd33a:~/workspace$ echo $$
+2190
+: 로그인 쉘의 PID 정보가 출력됨.
+kill -9 $$
+이러면 로그아웃돼버림
+wasadmin@87c89edfd33a:~/workspace$ echo $PWD
+/home/wasadmin/workspace
+예제 : 06-potitional-param.sh
+
+
+
+■■■ 7강 Input & Output
+
+1. echo
+stdout 을 print 함
+echo <옵션> <메시지>
+-n : 메시지 출력후 한줄 띄우지 않음
+-e : backslash escape 문자 해석할때 특별한 의미를 지정함
+  \t : tab키
+  \n : 줄바꿈
+  \a : alert(bell)
+wasadmin@prezzie77-15U530-GT50K:~$ echo "Your time is up"
+Your time is up
+wasadmin@prezzie77-15U530-GT50K:~$ echo -e "First\tSecond"
+First   Second
+wasadmin@prezzie77-15U530-GT50K:~$ echo -n "Name:"
+Name:wasadmin@prezzie77-15U530-GT50K:~$
+echo "Your time is up" > time.txt
+변수 출력
+wasadmin@prezzie77-15U530-GT50K:~$ score=90
+wasadmin@prezzie77-15U530-GT50K:~$ echo score
+score
+wasadmin@prezzie77-15U530-GT50K:~$ echo $score
+90
+
+2. read
+read <옵션> 변수명
+  -n : 지정한 문자수만큼 받음
+  -t : 지정된 시간안에 입력받는다
+  -s :silent mode 로 입력하는 글자가 보이지 않는다
+read -t10 -n8 password
+read -t10 -n8 -s password
+wasadmin@prezzie77-15U530-GT50K:~$ read score
+80
+wasadmin@prezzie77-15U530-GT50K:~$ echo $score
+80
+wasadmin@prezzie77-15U530-GT50K:~$ read name score
+jeong 88
+wasadmin@prezzie77-15U530-GT50K:~$ echo $name
+jeong
+wasadmin@prezzie77-15U530-GT50K:~$ echo $score
+88
+wasadmin@prezzie77-15U530-GT50K:~$ echo $name
+kim
+wasadmin@prezzie77-15U530-GT50K:~$ echo $score
+80 classA
+; 은 한줄에 명령어 여러개 입력할때 씀
+wasadmin@prezzie77-15U530-GT50K:~$ echo -n "Name:" ; read name
+Name:Jeong
+wasadmin@prezzie77-15U530-GT50K:~$ echo $name
+Jeong
+
+3. printf
+C언어 printf 함수와 동일함
+정리X
+
+
+■■■ 8강 Branching
+1. exit
+exit <숫자>
+  0 : 프로그램이 정상 종료
+  1~255 : 프로그램이 실패로 종료
+  1 : 일반에러
+  2 : Syntax error
+$? : 종료값 출력
+아래처럼 정상종료된건지 에러난건지 모를때 $? 쓰면됨. 바로직전 종료된 프로그램의 exit 넘버를 보여줌
+wasadmin@5a657652b3a2:~$ date > /dev/null
+wasadmin@5a657652b3a2:~$ echo $?
+0
+cp file1 한다음에 echo $? 활용가능
+
+2. test
+비교연산자
+test <명령어> or [명령어]
+명령어 실행결과를 true(0) 또는 false(1)로 리턴.
+x -eq y     같으면 true 리턴
+x -gt y     x가 크면 true
+x -ge y     크거나 같으면
+x -lt y     작으면
+x -le y     작거나 같으면
+x -ne       같지 않으면
+-e file     파일이 존재하면
+-d file     디렉토리면
+-f file     파일이면
+-x file     실핼할수있으면
+얘네들도 $? 로 결과값 확인가능
+wasadmin@5a657652b3a2:~$ test 5 -lt 7
+wasadmin@5a657652b3a2:~$ echo $?
+0
+wasadmin@5a657652b3a2:~$ [ 5 -lt 7 ]
+wasadmin@5a657652b3a2:~$ echo $?
+0
+let 은 +-*/ 할때 씀
+wasadmin@5a657652b3a2:~$ let sum=5+5
+wasadmin@5a657652b3a2:~$ echo $sum
+10
+
+3. if-then
+이미지02 참조
+
+4. case
+wasadmin@5a657652b3a2:~$ echo "Restart?"
+Restart?
+wasadmin@5a657652b3a2:~$ read answer
+yes
+wasadmin@5a657652b3a2:~$ case $answer in
+> yes) echo "System restart";;
+> no) echo "Shutdown";;
+> *) echo "entered incorrectly";;
+> esac
+System restart
+위 커맨드들을 ---.sh 파일에 만들어서 활용 가능
+
+cat << asdfiwheg
+shell 파일안에
+cat << 이 있으면 그 명령어 뒤에 내용 중에 문자asdfiwheg가 나올때까지
+모두 출력하라는 의미임
+
+■■■ 9강 looping
+1. 산술연산 expr, let
+2. while and until loop
+3. for-loop
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

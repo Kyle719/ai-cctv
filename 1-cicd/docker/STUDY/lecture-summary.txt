@@ -1,0 +1,262 @@
+도커 강의
+윈도우에 vm 설치하고
+vm 에 우분투 설치하고
+ssh 로 붙어서 작업.
+
+도커 설치 후 docker ps 하면 permission denied
+도커 사용자 그룹에 유저를 추가
+usermod -a -G docker [user]
+
+동작 방식
+도커 허브에 수많은 도커 이미지들이 있다
+docker search nginx 이런식으로 관련 도커 이미지 검색 후
+docker pull nginx:latest
+docker run -d --name web -p 80:80 nginx:latest
+-d -> 백그라운드 모드로 실행해라 옵션
+curl localhost:80 으로 서버 뜬거 확인 가능함
+
+도커파일 만들고
+docker build 로 도커이미지 만들고
+docker run 으로 컨테이너 실행
+예제 2개 hellojs, webserver 참조
+
+docker rm -f [컨테이너]
+실행중인 컨테이너 지울때는 -f 를 붙인다 force
+
+
+컨테이너 배포
+(도커 이미지 배포라고 안하고 왜 컨테이너라고 할까..?)
+docker login
+id / pwd
+docker images
+docker tag webserver:v1 도커허브내아이디/webserver:v1
+docker push 도커허브내아이디/webserver:v1
+-> 허브 내 계정으로 업로드됨
+
+-> [1]~[4]
+
+
+[5] Docker Registry
+이란? 컨테이너 이미지를 저장하는 저장소
+- Docker Hub hub.docker.com
+- Private Registry 사내 컨테이너 저장소
+
+
+[6] 컨테이너 사용하기
+docker create --name webserver nginx:1.14
+이미지에서 컨테이너 만듬
+create 명령어는 기본이 백그라운드에서 실행하게함
+docker ps -a 해서 보면 STATUS 가 Created.
+여기 COMMAND 정보가 있는데 docker start 하면 해당 커맨드가 실행됨
+docker start webserver
+docker ps -a 해서 보면 STATUS 가 Up.
+-a 없으면 Up 상태의 컨테이너만 나옴
+실제 컨테이너 running 상태로 띄움
+
+-> docker run --name webserver -d nginx:1.14
+create, start 두개 합친거.
+localhost 에서 이미지 없으면 다운까지 받음
+docker pull 도 함.
+
+여기서 docker inspect webserver 하면 ip주소, 마운트된 볼륨, cpu, 메모리 등 리소스, 컨테이너 이미지 레이어, 등 정보가 나옴
+docker logs webserver
+웹서버 컨테이너가 만든 로그를 보여달라.
+docker logs -f webserver
+follow 달면 실시간으로 로그 추가되는거 볼수있음
+docker top webserver
+컨테이너 내부에서 실행중인 프로세스를 보여줘
+UID, PID, PPID, cpu, 터미널, 시간, 커맨드
+
+html 을 바꾸고 싶다면?
+현재 실행중인 컨테이너에 접속
+docker exec -it webserver /bin/bash
+백그라운드로 실행중인 프로세스에다가 bash 프로그램을 통해서 terminal 만들어서 interactive 하게 연결시켜줘
+아래 nginx html 파일이 있는데 수정
+echo "hsjeong's HOMEPAGE" > /usr/share/nginx/html/index.html
+그러고 curl xxx.xx.x.x 하면 아래가 뜸
+hsjeong's HOMEPAGE
+
+
+실행중인 컨테이너 관리
+docker ps
+docker top webserver (webserver 컨테이너 안에서 실행중인 프로세스 확인)
+docker logs webserver 이 컨테이너가 만든 로그정보
+docker exec webserver /bin/bash
+현재 runnning 중인 컨테이너에 추가로 bash 실행해서
+다른 명령어들 더 실행하고 싶을때 씀
+docker stop
+docker rm
+docker attach centos
+포그라운드로 실행중인 컨테이너에 연결
+
+
+[7] 컨테이너 관리
+* 하드웨어 리소스 제한 및 컨테이너 모니터링
+
+하드웨어 리소스
+- cpu, RAM, disk
+
+docker run --help 해보면
+memory, read/write cpu, blkio weight 등 옵션들이 있다.
+
+모니터링
+docker stat 런타임 통계
+docker event 
+cAdvisor 구글이 깃헙에 올려놨음.
+
+
+
+[8] 컨테이너 스토리지
+19-20
+* 컨테이너 볼륨 마운트
+* 데이터 보존
+* 컨테이너끼리 데이터 공유
+
+1. mysql DB data 영구 보존하기
+2. 웹데이터 readonly 서비스로 지원하기
+3. 컨테이너끼리 데이터 공유하기
+
+실습 20번째 영상 볼 차례
+
+1. 데이터 보존
+docker run -v /host/dir:/container/dir ...
+컨테이너 진입해서 /container/dir 에다가 파일 저장하면
+호스트 /host/dir 에도 파일이 저장된다.
+컨테이너 지워도 호스트 /host/dir 에 파일이 남아있다.
+
+04-hellojs 참조
+
+2. 호스트의 웹데이터 readonly 서비스로 컨테이너에 지원하기
+
+호스트에 /webdata/index.html 이 있을때
+아래처럼 실행하면 호슴트에 있는 html 파일 readonly 로 컨테이너로 읽으면서 서버 띄움.
+컨테이너에서 파일을 수정해도 host 의 html 파일은 수정 안됨?
+docker run -d -v /webdata:/var/share/nginx/html:ro -p 80:80 nginx:latest
+
+
+3. 컨테이너끼리 데이터 공유하기
+
+df -h -> 얼마만큼 디스크 용량 쓰고 있는지 확인.
+
+05-volume-data-share 참조
+
+
+
+[9] 컨테이너 통신(네트워크)
+21-22
+
+Q1. 컨테이너는 어떻게 통신?
+Q2. 컨테이너 포트를 외부로 노출할수있어요?
+Q3. 컨테이너 네트워크를 추가할수 있나요?
+Q4. 컨테이너끼리 통신은 어떻게 하나요?
+
+-> 이런걸 할 수 있다. 파악까지 완료.
+네트워크 기본 개념 스터디 후 다시 보면서 정리하기
+
+
+
+
+
+
+
+
+
+
+[10] 빌드에서 운영까지 - docker-compose
+23-24
+
+practices/06-wordpress-mysql 참조
+
+Q1. 도커컴포즈란?
+Q2. 도커컴포즈로 컨테이너 실행
+Q3. 빌드에서 운영까지
+
+Q1. 도커컴포즈란?
+도커컴포즈가 나 대신 여러 컨테이너들을 실행시켜줌
+docker run ... 
+도커 커맨드 형태로 하나씩 하는게 아니라
+YAML 형태로 만들어놓고 docker-compose 가 실행.
+
+docker-compose ps 하면 이걸로 띄운 컨테이너 정보 볼수도 있고
+모두 stop 도 되고 rm 도 되고.
+
+
+Q2. 도커컴포즈로 컨테이너 실행
+yml 문법 종류
+- version
+- services
+- build
+- image
+- command
+- port
+- link
+- expose
+- volumes
+- environment
+- restart
+- depends_on
+
+도커 컴포즈로 동작시키는 웹서버
+1단계 서비스 디렉토리 생성
+mkdir webserver
+cd webserver
+
+2단계 docker-compose.yml 생성
+3단계 docker-compose 명령어
+docker-compose up -d
+-d : daemon 모드, detach 모드 백그라운드로 실행
+-f : 다른 디렉토리에 있는 yml 로 실행시키고 싶을때 -f 하고 뒤에 yml 경로적어줌.
+docker-compose ps
+docker-compose scale mysql=2
+scale : mysql 컨테이너 개수 2개로.
+docker-compose ps
+docker-compose down
+down : 현재 디렉토리에서 docker-compose 로 띄웠던 컨테이너들 모두 종료 및 삭제. stop 은 종료만 시킴.
+
+docker-compose 명령어
+- up
+- ps
+- logs : + 서비스 이름 하면 특정 서비스의 로그 볼수있음
+- run : + 서비스 이름 하면 yml 안에 특정 서비스만 실행
+- start
+- stop
+- restart
+- pause
+- unpause
+- port
+- config : 작성한 yaml 파일의 문법 체크
+- kill
+- rm
+- donw
+
+
+Q3. 빌드에서 운영까지
+Dockerfile 만들어서 docker-compose up 할때
+빌드도 하고 끝나면 배포도 함.
+
+실습 참조
+실습1. Flask+redis
+practices/06-flask-redis
+실습2. 워드프레스+MySQL
+practices/07-wordpress-mysql
+
+24강 다시 보면서
+실습에서 설명해주는 부분 정리 잘해두기
+
+그러고 실습 2개 내가 여러번 요리조리 해보고
+23,24강 다시 보면서 빠진 내용 다시 정리하기
+
+
+
+
+
+
+
+
+[11] 최신버전으로 다시 함. 내용이 추가되는것들이 있음
+user 하려던거도 있음 usermod 하는거
+25-
+
+
+
+

@@ -1,0 +1,57 @@
+■■■ 06-example 은
+flask 로 웹 띄워서 페이지 접속하면 Hellow world 나오고
+페이지 접속한 횟수가 나오는 웹 페이지 만들기.
+접속한 횟수는 redis 이용해서 구현.
+redis 가 데이터베이스 역할함.
+
+■■■ 프로세스:
+1단계 서비스 디렉토리 생성
+mkdir composetest
+cd composetest
+
+2단계 빌드를 위한 dockerfile 생성
+./Dockerfile 참조
+
+3단계 docker-compose.yml 생성
+./compose.yml 참조
+
+4단계 docker-compose 명령어
+docker-compose up -d
+
+■■■ 실행:
+docker-compose up -d
+docker-compose -f docker-compose-local.yml u
+-f 해서 특정 yml 지정 가능함.
+
+■■■ 확인:
+웹페이지 접속
+url:
+x.x.x.x:5000 
+
+■■■ docker-compose ps:
+wasadmin@prezzie77-15U530-GT50K:~/workspace/ai-cctv/1-cicd/STUDY/practice/07-flask-redis$ docker-compose ps
+         Name                       Command               State                    Ports
+----------------------------------------------------------------------------------------------------------
+07-flask-redis_redis_1   docker-entrypoint.sh redis ...   Up      6379/tcp
+07-flask-redis_web_1     flask run                        Up      0.0.0.0:5000->5000/tcp,:::5000->5000/tcp
+
+보면 web 은 client 가 접속가능하도록 5000번 포트 포워딩 되어있고 redis 는 6379번 포트만 열려있음.
+
+■■■ docker-compose scale:
+docker-compose scale redis=3 이러면 redis 컨테이너가 3개로 늘어남. scale out/in 을 할 수 있음. 사용자 많아지면 늘리기.
+
+docker-compose scale web=3 은 안됨. 외부에서 들어오는 포트가 정해져있기 때문에 에러남
+
+■■■ docker-compose run:
+docker-compose run web env 하면 web 컨테이너의 환경변수 알려주세요라는 의미.
+docker-compose logs web 하면 이 컨테이너의 로그 정보 확인하기임.
+
+■■■ docker-compose stop:
+컨테이너 중지
+
+■■■ docker-compose down:
+컨테이너 중지 및 삭제
+
+■■■ docker-compose down --volumes:
+컨테이너 중지 및 삭제, 컨테이너에서 생성된 볼륨들도 삭제
+

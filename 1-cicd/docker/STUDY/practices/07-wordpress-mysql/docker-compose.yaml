@@ -1,0 +1,37 @@
+services:
+  db:   # => 띄울 컨테이너 이름 == docker run --name db -v db_data:/var/lib/mysql --restart=always -e MYSQL_ROOT_PASSWORD=somewordpress mysql:8.0.27
+    # image: mysql:8.0.27
+    image: mysql:5.7
+    # command: '--default-authentication-plugin=mysql_native_password'
+    volumes:
+      - db_data:/var/lib/mysql
+      # 그냥 이렇게하면 /var/lib/docker/volumes/07-wordpress-mysql_db_data/_data 여기에 쌓임. 호스트에서 root로 들어가면 보임. 
+    restart: always   # => 컨테이너가 외부의 영향으로 꺼졌을때 자동으로 다시 시작시켜줌.
+    environment:
+      - MYSQL_ROOT_PASSWORD=somewordpress
+      - MYSQL_DATABASE=wordpress
+      - MYSQL_USER=wordpress
+      - MYSQL_PASSWORD=wordpress
+    expose: # => 연결된 컨테이너에게 공개할 포트
+      - 3306
+      - 33060
+  wordpress:
+    depends_on:
+      - db  # => db 컨테이너 먼저 띄우고 wordpress 띄워라. db 컨테이너를 의존하니까. 종속적임.
+    image: wordpress:latest
+    volumes:
+      - wordpress_data:/var/www/html
+    ports:
+      - "80:80"
+    restart: always
+    environment:
+      - WORDPRESS_DB_HOST=db
+      - WORDPRESS_DB_USER=wordpress
+      - WORDPRESS_DB_PASSWORD=wordpress
+      - WORDPRESS_DB_NAME=wordpress
+volumes:
+  db_data: {}
+  wordpress_data: {}  # => 도커 볼륨 create 해서 컨테이너 볼륨을 생성해주고 이름을 붙여줌. 볼륨을 만들어서 두 컨테이너를 연결시켜줌
+
+  
+    

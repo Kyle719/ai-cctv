@@ -1,0 +1,23 @@
+LG 공유기 접속
+192.168.219.1
+
+
+LG 공유기 설정
+https://tks9567.tistory.com/m/entry/LG-%EA%B3%B5%EC%9C%A0%EA%B8%B0-%EA%B4%80%EB%A6%AC%EC%9E%90-%EC%84%A4%EC%A0%95-%EC%B4%88%EA%B8%B0%ED%99%94-%EB%B0%A9%EB%B2%95
+
+
+공인 IP와 사설 IP
+외부 네트워크에서, 사설 IP를 부여받은 제 서버에 접속하려면 어떻게 해야 할까요?
+https://toopyo.tistory.com/entry/kt-portforwarding
+
+
+
+도메인 등록
+freenom
+
+DDNS 설정 -> 아직 안했음
+구글링 'lg 공유기 dynamic dns 설정'
+
+
+
+

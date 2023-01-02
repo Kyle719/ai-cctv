@@ -1,0 +1,10 @@
+services:   # 두가지 application web, redis
+  redis:
+    image: "redis:alpine" # 얘는 이미지 바로 가져다 씀. 빌드 안함.
+    # ports:
+    #   - '6379:6379'
+  web:
+    build:  # 얘는 컨테이너를 빌드함. 도커파일이 있는데 그거 보고 빌드함.
+      context: .
+    ports:
+      - '5000:5000'

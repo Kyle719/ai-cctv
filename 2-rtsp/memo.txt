@@ -1,0 +1,81 @@
+
+
+yoloV5 코드에 있는듯함
+
+
+docker run -it -p 5000:5000 -v /home/wasadmin/workspace/ai-cctv/2-rtsp:/home/wasadmin/workspace/ai-cctv/2-rtsp --name rtsp-ctnr yolov5-img:v2
+
+https://stackoverflow.com/questions/69072075/cant-stream-tplink-vigi-camera-using-python
+https://www.tp-link.com/kr/support/download/tapo-c210/
+https://stackoverflow.com/questions/54731397/python-opencv-save-one-image-and-end-program
+
+https://ekfkdlxm.tistory.com/5
+
+rtsp://admin:admin123@192.168.29.30:554/cam/realmonitor?channel=1&subtype=1
+rtsp://ID:PWD@IP주소:PORT/stream2
+rtsp://prezzie77:1q2w3e4r5t@IP주소:554/stream2
+
+https://www.tp-link.com/kr/support/faq/2680/
+
+https://mik-a.com/10
+https://ekfkdlxm.tistory.com/5
+https://github.com/markszabo/tapo-c200-timelapse
+
+
+
+
+플라스크 웹페이지 rtsp
+https://towardsdatascience.com/video-streaming-in-web-browsers-with-opencv-flask-93a38846fe00
+https://github.com/NakulLakhotia/Live-Streaming-using-OpenCV-Flask
+
+
+
+
+docker run -d -i -t -v /home/migtelodis/ai-cctv:/ai-cctv -p 9099:9099 --name=tf-docker-test tensorflow/tensorflow /bin/bash
+
+docker run -d -i -t -p 9099:9099 --name=tf-docker-test tensorflow/tensorflow /bin/bash
+
+docker commit d5 adduser-image-test
+
+docker run -dit -u migtelodis  -p 9098:9098 -v /home/migtelodis/ai-cctv:/home/migtelodis/ai-cctv --name=adduser-container-test adduser-image-test:latest /bin/bash
+
+
+1080P (1920 * 1080) 스트림 : rtsp://IP 주소/stream1
+360P (640 * 360) 스트림 : rtsp:// IP 주소/stream2
+
+
+사용자 이름 / 비밀번호는 Tapo 앱을 통해 생성 한 카메라 계정
+prezzie77@gmail.com
+jhs1081502
+
+IP 주소 : 호스트 라우터가 할당 한 카메라의 IP 주소입니다.
+호스트 라우터의 DHCP 목록 또는 Tapo 앱에서 찾을 수 있습니다
+(카메라 설정으로 이동하여 카메라 세부 정보 페이지로 이동
+
+192.168.219.102
+rtsp://192.168.219.102/stream1
+rtsp://192.168.219.102/stream2
+
+sudo addgroup --gid 600 mw
+sudo adduser --ingroup mw --uid 601 wasadmin
+
+sudo groupadd docker
+sudo usermod -aG docker $USER
+newgrp docker
+
+docker-compose build --no-cache
+
+
+
+
+
+■■■■■
+rtsp 먼저 알아보자
+
+ip camera rtsp -> 파이썬으로 받고 -> web 에 스트리밍
+https://blog.miguelgrinberg.com/post/video-streaming-with-flask
+https://stackoverflow.com/questions/49698258/how-to-send-opencv-output-to-browser-with-python
+
+https://4youngpadawans.com/stream-live-video-to-browser-using-gstreamer/
+
+

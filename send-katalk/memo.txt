@@ -1,0 +1,23 @@
+
+migtelodis
+
+네이티브 앱 키	75eeac55a1f30f01759f5a3206565bfc
+REST API 키	5cae50e2b8a409aebcee56022a53b81d
+JavaScript 키	7f66bed76416b7d4f5a12fbb45e11d58
+Admin 키	9406d3ce48c305cc7950f4848149d72e
+
+앱 ID	800049
+앱 이름	migtelodis
+사업자명	migtelodis
+
+https://kauth.kakao.com/oauth/authorize?client_id=5cae50e2b8a409aebcee56022a53b81d&redirect_uri= https://example.com/oauth&response_type=code
+
+
+for1bJmvcRt_8dqegX0OqxFFQEbVp5dudNAmOTe7zbQndYPK4VCi43HfJaUXZonHzqvRjgo9dZwAAAGDVi1gsQ
+
+192.168.219.103
+
+
+docker run -d -i -t -v /home/hsjeong:/home/hsjeong -p 9099:9099 --name=tensorflow/tensorflow:latest tensorflow-test /bin/bash
+
+
