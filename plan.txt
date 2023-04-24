@@ -64,4 +64,19 @@ case3) 1-마곡집 / 2,3-다른와이파이존
 
 
 
+우분투 inotifywait 
+파일 써지면 알아채고 mp3 실행.
+sox 호스트에 설치되어있고
+play /my/dir/asdf.mp3
+
+
+블루투스 연결도 되네!!!
+
+아빠한테 개 돌아다니는 영상 받고
+detect 하면 txt 쓰고
+
+inotifywait 로 txt 발견하면
+블루투스 스피커에서 개소리나기
+
+
 

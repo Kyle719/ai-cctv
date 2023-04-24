@@ -1,0 +1,12 @@
+docker run -it -d -v /home/wasadmin/workspace/flask-deploy:/home/wasadmin/workspace/flask-deploy -p 5000:5000 --name flask-deploy python:latest
+
+docker exec -it flask-deploy bash
+
+■01■ flask
+1. 설치
+pip install Flask
+
+2. app 실행
+python3 myflask.py
+
+
