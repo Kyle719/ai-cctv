@@ -1,0 +1,75 @@
+nginx? apache? gunicorn? 서버 개념
+
+src/detect2.py
+-> yolo 코드에 사용하기 편하게 주석, print 달아놓고
+rtsp 로 받아온 영상을 1200 frame 만들어지면 wmv 동영상 파일로 저장.
+: 오리지널 yolo 코드에서 변수 print 찍어보는거 추가
+ip camera rtsp 받아서 detection 결과를 (1200프레임을) .wmv 영상으로 저장
+
+src/detect4.py
+-> 웹 화면에 디텍션 이미지 뿌려주는거
+: ip camera rtsp 받아서 detection 결과를 real time 으로 웹페이지에 뿌려주는 기능
+
+src/detect6.py -> dog 가 나타나면 메일 보내주는거
+
+src/detect7.py
+: 2번에서 안쓰는 코드 모두 delete
+.wmv 영상으로 저장 안하고
+.png 로 저장하도록 수정함 (detection 결과 있을때, 사람/차일때, .. 등등)
+실행 명령어는 py 파일 상단
+
+src/detect8.py
+: 7.py 를 class 화 시킴
+
+src/detect9.py
+: 4.py + 8.py
+브라우저에서 버튼 클릭해서 실시간 스트리밍 url 요청하면
+detection 결과 이미지를 실시간으로 볼 수 있다
+화면을 껐다가 다시 접속을 계속 반복해도 잘 동작한다
+디텍션 결과 이미지 저장도 한다
+* 문제
+- 화면을 껐을때 back 단에서 detection 이 돌지 않고 멈추게 된다
+- 여러군데에서 접속해도 되는데 그러면 하드웨어 스펙에 한계가 있으니까 제한이 필요하다
+
+src/detect10.py
+: 9.py
++ 스트리밍하면서 이미지 저장
++ 스트리밍 화면 끄고 버튼 클릭 시 back 단에서 detection 이 돌면서 이미지 저장 (thread)
+* 장점 : 스트리밍으로 보는 동일 이미지를 저장.
+* 단점 : 스트리밍과 이미지 저장을 같이해서 굉장히 느림. 스트리밍만 해도 현재 HW 스펙으로 5fps 밖에 안됨
+-> 프로세스 분리시키자 (메모리 사용량 늘더라도.. gpu 쓰는거보다 쌈..)
+
+src/detect11_backstage.py   = 8.py
+src/detect11_web.py         = 9.py 에서 저장기능 뺌
+
+
+==========================================================
+
+■■■ service 모듈 / 추론 모듈로 분리
+■ 01 ac_main_service.py
+-> 서비스 기능
+    사용자가 웹브라우저를 통해 아래를 요청할 수 있다
+        실시간 디텍션 결과 스트리밍 기능
+        과거에 저장된 이미지를 조회할 수 있다
+■ 02 ac_infer_task.py
+    1. 디텍션 결과 이미지를 스트리밍하는 기능의 클래스
+        request 요청 받으면 스트리밍한다
+    2. 디텍션 결과 이미지를 png 파일로 저장하는 celery task 의 클래스
+        celery redis 를 사용한다 (vision 과 같은 구조를 만든다)
+        flask 떠있다가 request 들어오면 task.delay 해서
+        디텍션 결과 이미지 저장 기능 task 를 실행 시킨다
+        celery redis 기능을 통해 task 의 상태를 확인할수 있다
+        ex) 사용자 화면 상에서 '탐지 중' 확인할 수 있다
+        task 를 종료 시키는 api 를 구현할 수 있다
+        task 를 재시작 시키는 api 를 구현할 수 있다
+
+
+
+apt update
+ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
+DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata
+dpkg-reconfigure --frontend noninteractive tzdata
+
+
+
+

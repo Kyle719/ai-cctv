@@ -1,0 +1,39 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+.main-container {
+    /* width: 300px; */
+    margin: 0 auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+img {
+    width: 100%;
+    height: auto;
+}
+@media (orientation: landscape) {
+    img {
+        width: auto;
+        max-height: 100vh; /* 가로 모드일 때 화면 높이의 100%로 제한 */
+    }
+}
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* 세로 방향 위쪽 정렬 */
+}
+.centered img {
+  max-width: 100%;
+  height: auto;
+}
+.top-aligned-paragraph {
+      display: flex;
+      justify-content: flex-start; /* 수평 방향 왼쪽 정렬 */
+      align-items: flex-start; /* 수직 방향 위쪽 정렬 */
+}

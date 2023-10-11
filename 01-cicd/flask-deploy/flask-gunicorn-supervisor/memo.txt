@@ -1,0 +1,56 @@
+■00■ 도커
+docker run -it -d -v /home/wasadmin/workspace/flask-deploy:/home/wasadmin/workspace/flask-deploy -p 5000:5000 --name flask-deploy python:latest
+docker exec -it flask-deploy bash
+
+
+■01■ flask
+1. 설치
+pip install Flask
+2. app 실행
+python3 myflask.py
+
+
+■02■ gunicorn
+1. 설치
+pip install gunicorn
+2. app 실행
+gunicorn -w 4 -b 0.0.0.0:5000 'myflask:app_with_gunicorn'
+
+
+■03■ supervisor
+1. 설치
+apt-get update
+apt-get install -y supervisor
+
+2. 사용
+설치가 완료되었다면, /etc/supervisor 경로가 생성됨
+해당 경로로 이동하면 다음과 같음
+
+$ cd /etc/supervisor
+$ ls
+conf.d  supervisord.conf
+
+conf.d/ : 각 프로세스별 설정 파일을 저장하는 공간
+supervisord.conf : 설정 파일 작성 방법
+
+supervisor에 원하는 프로그램을 관리받으려면 해당 프로그램을 위한 설정 파일을 생성해주어야함.
+supervisord.conf 파일 내용도 수정 <- # 추가설정 달아둠
+
+실제 설정 파일은 모두, conf.d 디렉터리에 저장하면됨.
+example.conf -> flask 띄우는 예제 config 참조.
+
+
+2-1. 아래 추가 설정
+touch /var/run/supervisor.sock
+chmod 777 /var/run/supervisor.sock
+
+
+3. 실행
+supervisord -c /etc/supervisor/supervisord.conf
+supervisorctl restart all
+
+죽이고 다시할때는 아래처럼
+ps -ef | grep supervisord
+kill -9 [PID]
+
+

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI CCTV</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_view_photo.css') }}">
+</head>
+<body>
+  <div class="main-container">
+    <a href="/">Home<br></a>
+    <h3>View Photos</h3>
+    <p align="left">과거에 AI가 침입을 감지하여 저장해둔 사진을 확인할 수 있습니다. 날짜별로 정리된 사진을 확인하세요</p>
+    <div>{{ folder_name }} | {{ file_name }}</div>
+    <div class="centered">
+      <img src="{{ url_for('image_feed', img_dir=img_path) }}">
+    </div>
+    <br>
+    <div class="top-aligned-paragraph">
+      <a href="{{bef_img_path}}">이전 사진 보기 - {{ bef_img_path }}</a>
+    </div>
+    <br>
+    <div class="top-aligned-paragraph">
+      <a href="{{nex_img_path}}">다음 사진 보기 - {{ nex_img_path }}</a>
+    </div>
+    <br>
+  </div>
+</body>
+</html>
+
+

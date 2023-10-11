@@ -2,7 +2,12 @@
 """
 Run YOLOv5 detection inference on images, videos, directories, globs, YouTube, webcam, streams, etc.
 
+# 직접 실행
 python3 detect4.py --nosave --weights yolov5s.pt --source 'rtsp://prezzie77:1q2w3e4r5t@192.168.219.102:554/stream1'
+python3 detect4.py --nosave --weights yolov5s.pt --source 'rtsp://prezzie77:1q2w3e4r5t@183.106.132.155:554/stream1'
+
+# gunicorn 으로 실행
+gunicorn -b 0.0.0.0:7000 detect4:app
 
 docker run -it -v /home/wasadmin/workspace/ai-cctv:/home/wasadmin/workspace/ai-cctv -p 7000:7000 --name yolo-rtsp-ctnr yolov5-img:v2
 
@@ -38,6 +43,8 @@ import sys
 from pathlib import Path
 from flask import Flask, render_template, Response
 import cv2
+import time
+import threading
 
 app = Flask(__name__)
 
@@ -101,8 +108,10 @@ def gen_frames(
         vid_stride=1,  # video frame-rate stride
 ):
 
+    print('### gen_frames')
+
     # ■■■ opt 변수 나중에 처리해보자
-    source = 'rtsp://prezzie77:1q2w3e4r5t@192.168.219.102:554/stream1'
+    source = 'rtsp://prezzie77:1q2w3e4r5t@183.106.132.155:554/stream1'
     weights = 'yolov5s.pt'
 
     source = str(source)
@@ -134,12 +143,15 @@ def gen_frames(
     # Dataloader
     bs = 1  # batch_size
     if webcam:
+        print('webcam')
         view_img = check_imshow(warn=True)
         dataset = LoadStreams(source, img_size=imgsz, stride=stride, auto=pt, vid_stride=vid_stride)
         bs = len(dataset)
     elif screenshot:
+        print('screenshot')
         dataset = LoadScreenshots(source, img_size=imgsz, stride=stride, auto=pt)
     else:
+        print('else')
         dataset = LoadImages(source, img_size=imgsz, stride=stride, auto=pt, vid_stride=vid_stride)
     vid_path, vid_writer = [None] * bs, [None] * bs
 
@@ -148,6 +160,8 @@ def gen_frames(
     seen, windows, dt = 0, [], (Profile(), Profile(), Profile())
     NumNum = 0
     for path, im, im0s, vid_cap, s in dataset:
+        print('### NumNum : {}'.format(NumNum))
+        print('path:{}, vid_cap:{}, s:{}'.format(path, vid_cap, s))
         NumNum += 1
         with dt[0]:
             im = torch.from_numpy(im).to(model.device)
@@ -172,6 +186,7 @@ def gen_frames(
 
         # Process predictions
         for i, det in enumerate(pred):  # per image
+            print('### seen : {}'.format(seen))
             seen += 1
             if webcam:  # batch_size >= 1
                 p, im0, frame = path[i], im0s[i].copy(), dataset.count
@@ -232,9 +247,13 @@ def gen_frames(
             # print('im0.shape:{}'.format(im0.shape))     # im0.shape:(720, 1280, 3)
 
             ret, buffer = cv2.imencode('.jpg', im0)
+
+            print(f"{threading.get_ident()}")
+
             frame = buffer.tobytes()
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
+
 
 def parse_opt():
     parser = argparse.ArgumentParser()
@@ -272,11 +291,16 @@ def parse_opt():
 
 @app.route('/video_feed')
 def video_feed():
+    print('33333333333')
     #Video streaming route. Put this in the src attribute of an img tag
     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
+
 @app.route('/')
 def index():
+    print('11111111111111')
+    print(f"{threading.get_ident()}")
+    print('-----------------')
     """Video streaming home page."""
     return render_template('index2.html')
 
@@ -286,5 +310,6 @@ def main(opt):
     # run(**vars(opt))
 
 if __name__ == "__main__":
+    print('-- main')
     opt = parse_opt()
     main(opt)

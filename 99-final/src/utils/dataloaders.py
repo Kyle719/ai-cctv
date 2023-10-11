@@ -370,9 +370,9 @@ class LoadStreams:
 
             _, self.imgs[i] = cap.read()  # guarantee first frame
             self.threads[i] = Thread(target=self.update, args=([i, cap, s]), daemon=True)
-            LOGGER.info(f"{st} Success ({self.frames[i]} frames {w}x{h} at {self.fps[i]:.2f} FPS)")
+            # LOGGER.info(f"{st} Success ({self.frames[i]} frames {w}x{h} at {self.fps[i]:.2f} FPS)")
             self.threads[i].start()
-        LOGGER.info('')  # newline
+        # LOGGER.info('')  # newline
 
         # check for common shapes
         s = np.stack([letterbox(x, img_size, stride=stride, auto=auto)[0].shape for x in self.imgs])
@@ -383,6 +383,7 @@ class LoadStreams:
             LOGGER.warning('WARNING ⚠️ Stream shapes differ. For optimal performance supply similarly-shaped streams.')
 
     def update(self, i, cap, stream):
+        # print('### LoadStream - update i : {}'.format(i))
         # Read stream `i` frames in daemon thread
         n, f = 0, self.frames[i]  # frame number, frame array
         while cap.isOpened() and n < f:
@@ -420,6 +421,7 @@ class LoadStreams:
 
     def __len__(self):
         return len(self.sources)  # 1E12 frames = 32 streams at 30 FPS for 30 years
+
 
 
 def img2label_paths(img_paths):

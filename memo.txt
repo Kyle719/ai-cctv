@@ -1,2 +1,91 @@
-nginx? apache? gunicorn? 서버 개념
+■■■ service 모듈 / 추론 모듈로 분리
+■ 01 ac_main_service.py
+-> 서비스 기능
+    사용자가 웹브라우저를 통해 아래를 요청할 수 있다
+        실시간 디텍션 결과 스트리밍 기능
+        과거에 저장된 이미지를 조회할 수 있다
+■ 02 ac_infer_task.py
+    1. 디텍션 결과 이미지를 스트리밍하는 기능의 클래스
+        request 요청 받으면 스트리밍한다
+    2. 디텍션 결과 이미지를 png 파일로 저장하는 celery task 의 클래스
+        celery redis 를 사용한다 (vision 과 같은 구조를 만든다)
+        flask 떠있다가 request 들어오면 task.delay 해서
+        디텍션 결과 이미지 저장 기능 task 를 실행 시킨다
+        celery redis 기능을 통해 task 의 상태를 확인할수 있다
+        ex) 사용자 화면 상에서 '탐지 중' 확인할 수 있다
+        task 를 종료 시키는 api 를 구현할 수 있다
+        task 를 재시작 시키는 api 를 구현할 수 있다
 
+        ●◆● ●◆● ●◆● ●◆● ●◆● ●◆● ●◆● ●◆● ●◆● ●◆● ●◆● ●◆● ●◆● ●◆● 
+        -> class celery task 로 구현하려햇는데 잘 안되네.. 함수 형태로 하자..
+        ●◆● ●◆● ●◆● ●◆● ●◆● ●◆● ●◆● ●◆● ●◆● ●◆● ●◆● ●◆● ●◆● ●◆● 
+
+
+구현해야할 기능 :
+▶ 01 fask 에 flask restx 더하기
+-> 하지말자 꼬일거 같음 post man 을 쓰자
+
+▶ 02 flask + celery + redis 기능
+기능으로
+- background 에서 디텍션 결과 이미지를 저장하는 기능 구현
+    > background 저장 on/off 버튼 추가
+    > background 저장 대상 설정 버튼 추가 (person 만, person 이랑 car 둘다)
+    > background 저장 주기 설정 버튼 추가 (person 나타나서 이미지 저장하면 앞으로 5초간 저장 안함)
+    > background 저장 상태 확인 : on / off / 저장 대상 / 저장 주기 / 
+
+▶ 03 SKT 의 AI CCTV 제품을 살펴보고 사용자 시나리오를 만들어보자
+
+▶ 04 네트워크 확인 기능
+thread 로 주기적으로 ping 날려서 네트워크 상태 확인하는 기능
+
+▶ 05 몇명인지 확인 2 persons
+
+▶ 06 메인 페이지로 이동하는 기능 만들기
+https://dnf-lover.tistory.com/entry/PHP-HTML-JS-HTML-%EC%97%90%EC%84%9C-%ED%8E%98%EC%9D%B4%EC%A7%80-%EC%9D%B4%EB%8F%99%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95-%EC%83%88-%EC%B0%BD%EC%9C%BC%EB%A1%9C-%ED%8E%98%EC%9D%B4%EC%A7%80%EB%A5%BC-%EC%83%88%EB%A1%9C-%EB%9D%84%EC%9A%B0%EB%8A%94-%EB%B0%A9%EB%B2%95-GET%EA%B3%BC-POST%EC%9D%98-%EC%B0%A8%EC%9D%B4
+
+▶ 07 이미지 저장하는 경로 날짜별로 폴더 나누기?
+
+▶ 08 이미지 파일 조회 화면
+
+▶ 09 셀러리 테스크 돌고 있으면 팝업 띄우고 이미지 파일 조회하는 화면으로 이동
+
+▶ 10 뱅글뱅글 넣기
+
+▶ 11 이미지 조회
+
+▶ 12 task 죽이기
+
+▶ 13 task 살아있는 시간 설정
+-> 설정 화면
+  - 클래스 설정 체크박스
+  - threshold 설정
+  - 영역 그리기
+  - 
+
+▶ 14 홈화면에 썸네일 처럼 간략 설명 이미지 넣기
+
+▶ 15 로그인
+
+
+
+
+SKT 에 지원할때
+chat gpt 한테 지원서 샘플 받기 linkedin, ...하나 많이 쓴다는거 잇엇는데 reser 어쩌구인가 승준 카톡
+스토리
+Home AI CCTV 를 만들게 된 계기 - 잔디밭 개 똥
+AI CCTV 구현하면서 진행하였던 스터디
+- Software Architecture
+- AWS
+- docker
+- kubernetes
+- network
+- 보안 security?
+- linux
+- python
+- pytorch
+- tensorflow
+- deep learning vision
+- yolo detection
+- nginx gunicorn flask
+- flask celery redis
+- frontend, backend

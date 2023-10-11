@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cn-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: www.canary.com  
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: v1-svc
+            port:
+              number: 8080

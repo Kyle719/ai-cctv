@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: persistentvolume
+spec:
+  containers:
+  - name: container
+    image: redis
+    volumeMounts:
+    - name: persistentvolume
+      mountPath: /mount1
+  volumes:
+  - name : persistentvolume
+    persistentVolumeClaim:
+      claimName: pvc

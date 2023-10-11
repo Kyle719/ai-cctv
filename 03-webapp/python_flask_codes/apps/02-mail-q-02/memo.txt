@@ -1,0 +1,28 @@
+68~88page
+
+02-mail-q-02 에 아래 기능 추가
+- Validation
+    pip install email-validator
+- Flash 메시지
+- 로깅
+- debugtoolbar
+    pip install flask-debugtoolbar
+- 메일 송신
+    pip install flask-mail
+    Gmail 계정으로 설정 -> prezzie77.dev@gmail.com
+    위 계정의 앱 비번이 생성되는데 그걸 config 에 박아두고 코드상에서 메일을 보냄
+    lqxngegvtsbkoyhm
+- 쿠키
+    ?
+- 세션
+    ?
+
+
+1. 문의폼 화면을 표시 GET
+
+2. 문의 내용을 이메일로 송신 POST
+3. 문의 완료 화면으로 리다이렉트 REDIRECT
+4. 문의 완료 화면을 표시 GET
+
+
+

@@ -1,0 +1,76 @@
+
+https://globalknowledgekr-my.sharepoint.com/personal/os1_gkk_co_kr/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fos1%5Fgkk%5Fco%5Fkr%2FDocuments%2F%EC%9E%A5%EC%9B%90%EC%84%9D%2F%EA%B0%95%EC%9D%98%2FK8S%2FOneday%20Kubernetes%20%EA%B8%B0%EB%B3%B8%2FOneday%20Kubernetes%20%EA%B8%B0%EB%B3%B8%5F%EA%B3%B5%EC%9C%A0%ED%8F%B4%EB%8D%94&ga=1
+
+
+https://globalknowledgekr-my.sharepoint.com/:x:/g/personal/os1_gkk_co_kr/EfdugPKmyM1DkE7msbXu81EBlmy81lWy1eDYmTKO9kEAgg?rtime=_XrdGu7J20g
+
+
+user04
+LGcns!23
+
+k8s-master	
+172.31.5.153
+
+k8s-worker1
+172.31.2.109
+
+k8s-worker2
+172.31.7.46
+
+
+실습 AWS 페이지
+https://ap-southeast-2.signin.aws.amazon.com/oauth?client_id=arn%3Aaws%3Asignin%3A%3A%3Aconsole%2Fcanvas&code_challenge=HvcUe9sZb_IDaywtpXv0Gm9l2v0R0GPCyqxw8eoP_jY&code_challenge_method=SHA-256&response_type=code&redirect_uri=https%3A%2F%2Fconsole.aws.amazon.com%2Fconsole%2Fhome%3FhashArgs%3D%2523%26isauthcode%3Dtrue%26state%3DhashArgsFromTB_ap-southeast-2_eaa1ea51283e9926&X-Amz-Security-Token=IQoJb3JpZ2luX2VjENn%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDmFwLXNvdXRoZWFzdC0yIkcwRQIgG2s%2FHBxp8y5nnSHbxB399HsCvPMvWQ6eUi8%2FQpKQ4vACIQDcvI8ddKICfUAQ%2BB7KYJFc9vdkOHQjvX51puEIFFfnWiqTAgji%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAEaDDQyNjA2MzgxNjU1NCIMgkByunJhpgAbmt%2FLKucB3amx%2BxTasUgYSYO8JLkhimar%2BcB2NRL0HxWXQtYOh3h6bRjEFH8ZRyfgGB0z9BP6Zk8EKXbieEP%2FccAKFnXhECzuouad%2BZMuXAqcj2pGq92S5Tv8RFommOjbxiV8hIdWvdqalO1dywR2OrmKtImpB%2FAke6OmF5qCmt24SNECh2aeJSVaI%2FJl6HptFx2dzadoolXIyHQehtoCAbqR2PuDYiyfaptbRlhkFpdUyF1pkkGxozdsUMPNceKRvwjkRYv7YIhvQeSdpV7xr0C7FCGThKiMEx3mEpu3ddAcqdeOIZaIZJ7sbD5BMNDkl6kGOo8BHyCP4dCm6dCmDZ4ZvFCxU0oFnUBK75AyWaHQ3wXfr5rZIiatFr3DST0KzmOTZRfR76XrJtmHcw%2F8mmIH%2FVK1gLh%2Fu4ycfpNx3eyV%2B2l7%2BMyai3gNwe16906HgUw4eF5vpB6w6pp9695vHflPgOrGZxMgwlCMlXtVvcK8nJHbFsVAewsWHTIzLDuz74nocv4%3D&X-Amz-Date=20231011T014132Z&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAWGM3B45VEOIE7D7G%2F20231011%2Fap-southeast-2%2Fsignin%2Faws4_request&X-Amz-SignedHeaders=host&X-Amz-Signature=f3882cc1cb37a11b8377fb99c7c0788ec5d572a707d68e3fefe8bf599f9727ca
+
+
+
+AWS 실습 따라할수 있게 캡처랑 설명
+https://github.com/wsjang619/k8s_oneday_essential/tree/main/lab1
+
+
+
+
+chmod 600 k8skey.pem
+ssh -i k8skey.pem <master ip>
+ssh -i k8skey.pem 172.31.5.153
+ssh -i k8skey.pem 172.31.2.109
+ssh -i k8skey.pem 172.31.7.46
+
+
+sudo -i
+sudo hostnamectl set-hostname k8s-master
+sudo -i
+
+sudo -i
+sudo hostnamectl set-hostname k8s-worker1
+sudo -i
+
+sudo -i
+sudo hostnamectl set-hostname k8s-worker2
+sudo -i
+
+pemkey 는 클라우드 ec2 생성할때 만든다
+근데 key pair 기능을 사용해서 리스트 목록을 쭉 정리해두고
+한번 수십 수백게 ec2 생성에 적용할 수 있다
+
+
+kubeadm init --pod-network-cidr=172.16.0.0/16 --apiserver-advertise-address=<Master IP>
+
+kubeadm init --pod-network-cidr=172.16.0.0/16 --apiserver-advertise-address=172.31.5.153
+-> 클러스터 구성한다 worker node 네트워크 연결까지 등등
+
+kubeadm join 172.31.5.153:6443 --token yzeh0f.xiv1c8xvmpr5cky9 \
+        --discovery-token-ca-cert-hash sha256:7d61d381dbb3aa989056cab2aba528cc98f38fe2a21bf95f5894b8d39fe40e4e
+
+저장해둔다
+나중에 워커노드에서 사용한다
+
+
+https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands
+
+
+git clone https://github.com/wsjang619/k8s_oneday_essential
+
+
+
+그럼 NodePort 대신 ServicePort 를 쓰는 이유는 뭔가요? 보안을 고려하는건가요?
+

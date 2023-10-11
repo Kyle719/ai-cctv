@@ -1,0 +1,17 @@
+60~67page
+
+01-minimalapp 에 문의폼 기능 추가로 만들기.
+사용자가 사용자 정보 입력하고 문의 mail 을 보내면
+정상적으로 메일 문의 접수됐다는 화면 보여주는 기능.
+
+1. 문의폼 화면을 표시 GET
+    locatlhost:5001/contact
+2. 문의 내용을 이메일로 송신 했다고 치고 POST
+    전송버튼 클릭하면 POST 되고
+3. 문의 완료 화면으로 리다이렉트 REDIRECT
+4. 문의 완료 화면을 표시 GET
+    locatlhost:5001/contact/complete 으로 리다이렉트되서 GET 으로 화면으로 들어감
+-> PRG 패턴. POST > REDIRECT > GET
+POST 하고 바로 render_template 하면 중복 어쩌구 오류 생겨서 안좋음
+
+

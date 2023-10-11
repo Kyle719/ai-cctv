@@ -1,13 +1,23 @@
-<html>
-  <head>
-    <title>Video Streaming Demonstration</title>
-    <link rel="shortcut icon" href="">
-    <link rel="shortcut icon" href="#" />
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
-  </head>
-  <body>
-    <h1>Video Streaming Demonstration</h1>
-    <img src="{{ url_for('video_feed') }}">
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI CCTV Live</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_live.css') }}">
+</head>
+<body>
+  <div class="main-container">
+    <a href="/">Home<br></a>
+    <h3>AI CCTV Live</h3>
+    <!-- <button type="button" onclick="alert('Hello World!')">CLICK - popup test</button> -->
+    <div class="centered">
+        <img src="{{ url_for('video_feed') }}">
+    </div>
+    <div></div>
+  </div>
+</body>
 </html>
+
+
+

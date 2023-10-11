@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: filecs-pod
+spec:
+  containers:
+  - name: container
+    image: nginx
+    env:
+    - name: cfile
+      valueFrom:
+        configMapKeyRef:
+          name: fcm
+          key: cfile.txt
+    - name: sfile
+      valueFrom:
+        secretKeyRef:
+          name: fsc
+          key: sfile.txt

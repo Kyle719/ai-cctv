@@ -1,0 +1,122 @@
+■ 01 환경
+
+1. 도커
+docker pull python
+docker run -idt -v /home/wasadmin:/home/wasadmin -p 9876:9876 --name fl-cel-red-test 22c957c35e37
+
+docker exec -it fl-cel-red-test bash
+alias 'll=ls -l'
+
+2. Flask + Celery + Redis
+apt update
+apt install redis-server -y
+
+pip install Flask
+
+pip install 'celery[redis]'
+-> redis dependency 고려한 celery 설치 방법
+
+pip install celery
+pip install redis
+
+
+■ 02 실행
+
+1. redis server 기동
+redis-server /etc/redis/redis.conf
+# 서버 실행 여부 확인
+ps -ef | grep redis
+# 기본값으롷 Redis 서버에 접속
+redis-cli
+# 포트 지정하여 Redis 서버에 접속
+redis-cli -p 6379
+# 서버 정상여부 확인
+ping 입력 후 엔터
+# Redis 서버 정보 확인
+info 입력 후 엔터
+
+2. celery 워커 기동
+celery --app=celery_task worker -l INFO
+--concurrency=1
+--logfile=/mydir/.../
+
+3. Flask 실행
+python3 flask_service.py
+
+=> flask 를 통해 request 받으면 task 를 broker queue 에 
+쌓고 바로 response 를 날림.
+broker queue 에 쌓인 task 를 celery worker 가 가져가서 처리함
+
+
+■ 03 운영 배포
+실행1.~3. 을 supervisor 를 이횽하여 데몬화시켜서 실행시킴
+
+
+■ 04 기타 celery 기능
+
+[1] task 상태 업데이트
+update_state()
+Task 의 상태를 업데이트 할 수 있다
+meta 정보를 추가로 입력할 수 있다
+
+state = "TRAINING"
+status = {
+    'model_id':''
+    'training_id':''
+    ...
+}
+update_state(task_id=self.task_id, state=.., meta=json.dumps(status, cls=NpEncoder))
+
+
+[2] task 비정상 상태 체크하고 상태 업데이트
+Task 가 OOM/DISK_FULL 등으로 죽으면
+log 파일에 남게 되는데
+log 파일을 계속 확인하는 thread 를 두고
+재귀함수인듯
+def trace_iteration(self):
+    ...
+    self.iter_worker = threading.Time(5, self.trace_iteration)
+    self.iter_worker.start()
+
+예를 들어 OOM 을 로그에서 발견하게 되면 해당 task 의 상태를 OOM 났다고 update_state 한다.
+그러면 task 의 상태를 체크하고 있던 다른 녀석이 이를 발견하고
+if state.find("OOM") > -1:
+    result_code = 601
+if state.find("DISK_FULL") > -1:
+    result_code = 603
+task 프로세스를 깔끔히 없애버리고
+다시 실행시키던가 등의 다음 action 을 취한다
+
+
+[3] task 상태 가져오기
+from celery import inspect, revode 해서
+
+task 의 정보를 가져오는 기능
+asdf = inspect()
+aaaa = asdf.active()
+bbbb = asdf.reserved()
+현재 돌고 있는 task 랑 브로커에 쌓여있는 task 들을 알 수 있음
+
+for one_task in aaaa:
+    'some_value' = one_task['args'][0]
+    'model_id' = one_task['args'][1]
+    ...
+
+활용
+task info 를 불러왔는데 없으면 background 에서 안돌고있다! 라고 알려줄수 있음
+task info 를 불러왔는데 id 는 있는데 뭔가 이상하다! OOM, DISK_FULL 등 상태 확인
+
+
+[3] task 죽이는 기능
+위 조회 기능으로 task 정보 불러와서 실행중/대기중 인 task 를 죽일 수 있다
+revode(task id, terminate(), )
+위를 실행시키고 한번 더 확인했는데 아직 이상하게 남아있다!
+그러면 os.kill 로 죽임. task["worker_pid"]
+
+
+
+
+
+
+
+

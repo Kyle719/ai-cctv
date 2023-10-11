@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ct-pod
+  labels:
+    category: customer
+spec:
+  containers:
+  - name: container
+    image: ghcr.io/wsjang619/customer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ct-svc
+spec:
+  selector:
+    category: customer
+  ports:
+  - port: 8080
+    targetPort: 80

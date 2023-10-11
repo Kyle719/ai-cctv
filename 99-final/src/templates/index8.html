@@ -1,0 +1,113 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_record_settings.css') }}">
+  <title>AI CCTV</title>
+</head>
+<body>
+  <div class="main-container">
+    <a href="/">Home<br></a>
+    <h3>Record Settings</h3>
+    <p>침입 발생 시, 아래 조건에 맞게 AI가 영상을 감시하고 결과 이미지를 저장합니다</p>
+    <br>
+    <form method="POST" action="/save_editted_task_parameters">
+
+      <div class="form-group label">
+        <label>1. 대상 선택</label>
+      </div>
+      <div class="form-group">
+        AI가 감시할 대상을 선택하세요. 미입력 시 기본값은 사람과 자동차 입니다.
+      </div>
+      <div class="form-group">
+        <input type="checkbox" name="checkbox_person" value="yes"> 사람
+      </div>
+      <div class="form-group">
+        <input type="checkbox" name="checkbox_car" value="yes"> 자동차
+      </div>
+      <div class="form-group">
+        <input type="checkbox" name="checkbox_dog" value="yes"> 강아지
+      </div>
+      <div class="form-group">
+        <input type="checkbox" name="checkbox_cat" value="yes"> 고양이
+      </div>
+      <div class="form-group">
+        <input type="checkbox" name="checkbox_bird" value="yes"> 새
+      </div>
+
+      <br>
+      <div class="form-group label">
+        <label>2. 사진 저장 기능</label>
+      </div>
+      <div class="form-group">
+        사진 저장 기능을 키거나 끕니다. 미입력 시 기본값은 켜기 입니다
+      </div>
+      <div class="form-group">
+        <input type="radio" name="save_photos" value="on"> 켜기
+      </div>
+      <div class="form-group">
+        <input type="radio" name="save_photos" value="off"> 끄기
+      </div>
+
+      <br>
+      <div class="form-group label">
+        <label>3. 메시지 전송 기능</label>
+      </div>
+      <div class="form-group">
+        메시지 전송 기능을 키거나 끕니다. 미입력 시 기본값은 켜기 입니다
+      </div>
+      <div class="form-group">
+        <input type="radio" name="send_msg" value="on"> 켜기
+      </div>
+      <div class="form-group">
+        <input type="radio" name="send_msg" value="off"> 끄기
+      </div>
+
+      <br>
+      <div class="form-group label">
+        <label>4. AI 모델 선택:</label>
+      </div>
+      <div class="form-group">
+        AI 모델을 선택합니다. 미입력 시 기본값은 속도 50% / 정확도 50% 입니다
+      </div>
+      <div class="form-group">
+        <input type="radio" name="redio_speed_accu" value="6040"> 속도 60% / 정확도 40%
+      </div>
+      <div class="form-group">
+        <input type="radio" name="redio_speed_accu" value="5050"> 속도 50% / 정확도 50%
+      </div>
+      <div class="form-group">
+        <input type="radio" name="redio_speed_accu" value="4060"> 속도 40% / 정확도 60%
+      </div>
+
+      <br>
+      <div class="form-group label">
+        <label>5. 사진 저장과 메시지 전송 최소 주기</label>
+      </div>
+      <div class="form-group">
+        저장/전송하고 최소 몇 초 동안은 저장/전송을 하고 싶지 않을 때 아래 값을 설정합니다 미입력 시 기본값은 5초 입니다
+      </div>
+      <div class="form-group">
+        <input type="number" name="min_save_period" style="width: 250px;" min="0" max="60" step="1.0" placeholder="0 ~ 60 저장 최소 주기 (초)">
+      </div>
+
+      <br>
+      <div class="form-group label">
+        <label>6. Threshold</label>
+      </div>
+      <div class="form-group">
+        AI가 물체를 감지하는데 민감하게 반응하는 정도를 설정합니다. 미입력 시 기본값은 0.6 입니다
+      </div>
+      <div class="form-group">
+        <input type="number" name="detc_threshold" style="width: 250px;" min="0" max="1" step="0.01" placeholder="0 ~ 1 소수점 둘째자리">
+      </div>
+
+      <br>
+      <div class="form-button-group">
+        <button type="submit">적용</button>
+      </div>
+
+    </form>
+  </div>
+</body>
+</html>

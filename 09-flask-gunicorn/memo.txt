@@ -1,0 +1,10 @@
+gunicorn 설치
+apt update
+apt install python3-pip python3-dev build-essential libssl-dev libffi-dev python3-setuptools
+pip install wheel
+pip install gunicorn flask
+which gunicorn
+// gunicorn 경로 확인하기
+
+실행
+gunicorn flask-ex:app

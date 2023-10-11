@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cs-pod
+spec:
+  containers:
+  - name: container
+    image: nginx
+    envFrom:
+    - configMapRef:
+       name: cm-dev
+    - secretRef:
+       name: sc-dev

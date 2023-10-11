@@ -1,0 +1,19 @@
+docker run -it -d -v /home/wasadmin/workspace/flask-deploy:/home/wasadmin/workspace/flask-deploy -p 5000:5000 --name flask-deploy python:latest
+
+docker exec -it flask-deploy bash
+
+■01■ flask
+1. 설치
+pip install Flask
+2. app 실행
+python3 myflask.py
+
+
+■02■ gunicorn
+1. 설치
+pip install gunicorn
+2. app 실행
+gunicorn -w 4 -b 0.0.0.0:5000 'myflask:app_with_gunicorn'
+
+
+

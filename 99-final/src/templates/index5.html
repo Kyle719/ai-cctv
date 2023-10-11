@@ -1,0 +1,21 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <title>AI CCTV</title>
+</head>
+
+<body>
+  <div class="main-container">
+    <a href="/">Home<br></a>
+    <h3>View Photos</h3>
+    <p>과거에 AI가 침입을 감지하여 저장해둔 사진을 확인할 수 있습니다. 날짜별로 정리된 사진을 확인하세요</p>
+    <br>
+    <h4>날짜 선택</h4>
+    {% for i in folder_list %}
+      <p><a href=view_image_list?folder_name={{i}}>{{ i }}<br></a></p>
+    {% endfor %}
+  </div>
+</body>
+</html>
