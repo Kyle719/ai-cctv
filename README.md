@@ -2,13 +2,17 @@
 <br>
 집 마당에 어떤 강아지가 배변을 하고 도망가는지 잡아내기 위해 만든  
 <br>
-## Home AI CCTV Web Application  
+
+### Home AI CCTV Web Application  
+
+<br>
+AI가 감시중인 신시간 CCTV 영상 확인 할 수 있고
+<br>
 <br>
 사람이 항상 CCTV를 감시하기 어렵기 때문에 AI가 대신 CCTV 영상을 감시하다가  
 <br>
 침입을 감지하면 사진을 저장하고 알림 메시지를 보냅니다  
 <br>
-AI가 감시중인 신시간 CCTV 영상 확인도 가능합니다  
 <br>
 침입을 감지하는 기준, 예를 들어 사람과 자동차만 인식하도록 하고 AI모델 종류 선택, 사진 저장 주기 변경 등  
 <br>
