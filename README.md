@@ -38,7 +38,7 @@
 
 <br>
 
-### AI가 감지 기준 설정
+### AI 감지 기준 설정
 <br>
 
 ![record_onoff_settings](https://github.com/Kyle719/ai-cctv/assets/64996393/e488e9a9-3fb8-4cb1-ab64-0a75d7d148bd)
