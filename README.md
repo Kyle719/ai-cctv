@@ -24,7 +24,7 @@
 ### Home AI CCTV 메인 페이지와 사람이 감시 못할때 AI가 침입을 저장해둔 사진 조회 페이지
 <br>
 
-![aicctv_suspects](https://github.com/Kyle719/ai-cctv/assets/64996393/ef240bb3-a101-4400-acad-f031b531bc43)
+![aicctv_suspects](https://github.com/Kyle719/ai-cctv/assets/64996393/531fd2c7-8283-42b9-9b8e-700402cca3ad)
 
 
 <br>
@@ -33,7 +33,7 @@
 ### 실시간 AI CCTV 영상 확인 페이지
 <br>
 
-![aicctv_realtime_gif_file](https://github.com/Kyle719/ai-cctv/assets/64996393/37ebd858-f905-46d0-939f-a0f4a3053e6f)
+![aicctv_realtime_gif_file](https://github.com/Kyle719/ai-cctv/assets/64996393/88e2d3f5-09b2-44a0-9c92-05f43e1e4fc0)
 
 
 <br>
@@ -41,7 +41,7 @@
 ### AI 감지 기준 설정
 <br>
 
-![record_onoff_settings](https://github.com/Kyle719/ai-cctv/assets/64996393/e488e9a9-3fb8-4cb1-ab64-0a75d7d148bd)
+![record_onoff_settings](https://github.com/Kyle719/ai-cctv/assets/64996393/60c6f240-66c4-4844-abfe-72fc81e90a92)
 
 
 
