@@ -10,6 +10,8 @@
 #### ■ 1. 실시간 AI CCTV 영상
 <br>
 
+인터넷만 된다면 어디서든 웹페이지에 로그인하여 실시간 AI CCTV 영상 페이지에 접속 할 수 있습니다.
+
 ![aicctv_realtime_gif_file](https://github.com/Kyle719/ai-cctv/assets/64996393/88e2d3f5-09b2-44a0-9c92-05f43e1e4fc0)
 
 <br>
