@@ -4,7 +4,7 @@
 ## Home AI CCTV Web Application  
 <br>
 
-### ■ 1. 실시간 AI CCTV 영상
+### 1. 실시간 AI CCTV 영상
 
 ![aicctv_realtime_gif_file](https://github.com/Kyle719/ai-cctv/assets/64996393/88e2d3f5-09b2-44a0-9c92-05f43e1e4fc0)
 
@@ -15,7 +15,7 @@
 <br>
 <br>
 
-### ■ 2. 하루 24시간 감시 중인 AI 
+### 2. 하루 24시간 감시 중인 AI 
 
 ![view_imgs_dog_cat](https://github.com/Kyle719/ai-cctv/assets/64996393/febd5bec-2759-4c7b-baef-2e97d86bf839)
 
@@ -26,9 +26,9 @@
 <br>
 
 
-### ■ 3. 개인 맞춤형 AI CCTV
+### 3. 개인 맞춤형 AI CCTV
 
-![ai_start_stop_check](https://github.com/Kyle719/ai-cctv/assets/64996393/59dc42d0-2777-4d54-9702-c43cb018cc4d)
+![ai_start_stop_check](https://github.com/Kyle719/ai-cctv/assets/64996393/93f49271-7044-4981-8533-ffb69e1aa2da)
 
 <br>
 
@@ -36,12 +36,13 @@
 
 <br>
 
-침입을 감지하는 기준, 예를 들어 사람과 자동차만 인식하도록 하거나 AI모델 종류와 사진 저장 주기 변경 등 설정값을 입력받아 AI CCTV 영상 감시가 가능합니다
+침입을 감지하는 기준, 예를 들어 사람과 자동차만 인식하도록 하거나 AI모델 종류와 사진 저장 주기 변경 등 개개인의 상황에 맞게 조건을 맞춤으로 AI CCTV 영상 감시가 가능합니다
+<br>
 <br>
 <br>
 
 
-### ■ 적용 기술 study
+### 적용 기술 study
 
 인프라 ~ 운영 배포까지 활용한 기술들의 study 기록과 (01~11) 실제 AI CCTV 실행 소스코드(99).
 <br>
