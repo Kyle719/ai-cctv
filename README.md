@@ -28,7 +28,8 @@
 
 ### 3. 개인 맞춤형 AI CCTV
 
-![ai_start_stop_check](https://github.com/Kyle719/ai-cctv/assets/64996393/93f49271-7044-4981-8533-ffb69e1aa2da)
+![ai_start_stop_check](https://github.com/Kyle719/ai-cctv/assets/64996393/943ff7f6-509e-4b6c-97ba-dadaef0c203d)
+
 
 <br>
 
