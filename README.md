@@ -1,7 +1,5 @@
 # ai-cctv
-<br>
 집 마당에 어떤 강아지가 배변을 하고 도망가는지 잡아내기 위해 만든  
-<br>
 <br>
 
 ## Home AI CCTV Web Application  
@@ -9,11 +7,11 @@
 
 #### ■ 1. 실시간 AI CCTV 영상
 
-인터넷만 된다면 어디서든 웹페이지에 로그인하여 실시간 AI CCTV 영상 페이지에 접속 할 수 있습니다. 아래는 스마트폰에서 웹페이지에 접속하여 실시간 AI CCTV 영상을 화면 녹화한 영상입니다
+![aicctv_realtime_gif_file](https://github.com/Kyle719/ai-cctv/assets/64996393/88e2d3f5-09b2-44a0-9c92-05f43e1e4fc0)
 
 <br>
 
-![aicctv_realtime_gif_file](https://github.com/Kyle719/ai-cctv/assets/64996393/88e2d3f5-09b2-44a0-9c92-05f43e1e4fc0)
+인터넷만 된다면 어디서든 웹페이지에 로그인하여 실시간 AI CCTV 영상 페이지에 접속 할 수 있습니다. 아래는 스마트폰에서 웹페이지에 접속하여 실시간 AI CCTV 영상을 화면 녹화한 영상입니다
 
 <br>
 <br>
