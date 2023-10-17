@@ -1,4 +1,3 @@
-![view_imgs_dog_cat](https://github.com/Kyle719/ai-cctv/assets/64996393/3e15d575-b65f-4fbb-b00c-1fc0e035bda9)# ai-cctv
 집 마당에 어떤 강아지가 배변을 하고 도망가는지 잡아내기 위해 만든  
 <br>
 
