@@ -21,14 +21,18 @@
 
 <br>
 
-사람이 항상 CCTV를 감시하기 어렵기 때문에 AI가 대신 CCTV 영상을 감시하다가 침입을 감지하면 사진을 저장하고 알림 메시지를 전송합니다. 날짜, 시간별로 저장되고 언제든지 확인이 가능합니다
+사람이 항상 CCTV를 감시하기 어렵기 때문에 AI가 대신 CCTV 영상을 감시하다가 침입을 감지하면 사진을 저장하고 알림 메시지를 전송합니다. 날짜, 시간별로 저장되고 언제든지 확인 할 수 있습니다
 <br>
 <br>
 
 
 ### ■ 3. 개인 맞춤형 AI CCTV
 
-![record_onoff_settings](https://github.com/Kyle719/ai-cctv/assets/64996393/60c6f240-66c4-4844-abfe-72fc81e90a92)
+![ai_start_stop_check](https://github.com/Kyle719/ai-cctv/assets/64996393/59dc42d0-2777-4d54-9702-c43cb018cc4d)
+
+<br>
+
+![ai_settings](https://github.com/Kyle719/ai-cctv/assets/64996393/b6696086-451a-4747-ab35-c43d524cc11f)
 
 <br>
 
@@ -37,7 +41,7 @@
 <br>
 
 
-#### ■ 적용 기술 study
+### ■ 적용 기술 study
 
 인프라 ~ 운영 배포까지 활용한 기술들의 study 기록과 (01~11) 실제 AI CCTV 실행 소스코드(99).
 <br>
