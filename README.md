@@ -7,16 +7,16 @@
 ## Home AI CCTV Web Application  
 <br>
 
-#### ■ 1. AI가 감시중인 실시간 CCTV 영상 확인
+#### ■ 1. 실시간 AI CCTV 영상
 <br>
 
 ![aicctv_realtime_gif_file](https://github.com/Kyle719/ai-cctv/assets/64996393/88e2d3f5-09b2-44a0-9c92-05f43e1e4fc0)
 
 <br>
+<br>
 
 #### ■ 2. 365일 24시간 감시 중인 AI 
 
-<br>
 
 사람이 항상 CCTV를 감시하기 어렵기 때문에 AI가 대신 CCTV 영상을 감시하다가 침입을 감지하면 사진을 저장하고 알림 메시지를 전송합니다. 날짜, 시간별로 저장되고 언제든지 확인이 가능합니다
 <br>
@@ -26,9 +26,9 @@
 <br>
 
 #### ■ 3. 개인 맞춤형 AI CCTV
-<br>
 
 침입을 감지하는 기준, 예를 들어 사람과 자동차만 인식하도록 하거나 AI모델 종류와 사진 저장 주기 변경 등 설정값을 입력받아 AI CCTV 영상 감시.
+<br>
 <br>
 
 ![record_onoff_settings](https://github.com/Kyle719/ai-cctv/assets/64996393/60c6f240-66c4-4844-abfe-72fc81e90a92)
